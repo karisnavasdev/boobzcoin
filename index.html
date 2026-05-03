@@ -1,0 +1,1311 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>BOOBZCOIN</title><link rel="icon" type="image/svg+xml" href="/icon0.svg" sizes="any"><link rel="icon" type="image/png" sizes="96x96" href="/icon1.png"><link rel="apple-touch-icon" href="/apple-icon.png"><link rel="manifest" href="/manifest.json"><meta name="apple-mobile-web-app-title" content="boobzcoin"><meta name="theme-color" content="#71d2f5"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="preload" href="/Logo-loader.webp" as="image" fetchpriority="high"><link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&display=swap" rel="stylesheet"><style>
+    /* Critical hero rules — kept inline to prevent FOUC.
+       Without these, the page's external stylesheet loads after first paint
+       and the header briefly renders at ~100vh before collapsing to 80vh. */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: #b8eaff; overflow-x: hidden; }
+    header {
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      min-height: 75vh;
+      padding-bottom: 80px;
+      background: #87ceeb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    header video,
+    header #header-poster-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center 40%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    header #header-poster-fallback[hidden] { display: none; }
+    @media (max-width: 600px) {
+      header { min-height: 75svh; padding-bottom: 60px; }
+      header video { min-height: 75svh; object-position: center 40%; }
+    }
+
+    /* Loading screen — covers hero until video can play */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: #87ceeb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.45s ease;
+    }
+    #page-loader.is-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #page-loader.is-hidden .pl-o {
+      display: none;
+    }
+    #page-loader .pl-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    #page-loader .pl-stage {
+      --pl-dur: 0.5s;
+      position: relative;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #page-loader .pl-pct {
+      font-family: 'Bangers', 'Arial Black', Arial, sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.12em;
+      color: #fff;
+      -webkit-text-stroke: 1.5px #111;
+      paint-order: stroke fill;
+      font-variant-numeric: tabular-nums;
+    }
+    #page-loader .pl-o {
+      width: 64px;
+      height: 64px;
+      transform-origin: 50% 100%;
+      animation: pl-bounce var(--pl-dur) cubic-bezier(.5,.05,.5,.95) infinite;
+      will-change: transform;
+    }
+    @keyframes pl-bounce {
+      0%   { transform: translateY(0) scale(1, 1); }
+      43%  { transform: translateY(-60%) scale(1, 1); }
+      78%  { transform: translateY(0) scale(1, 1); }
+      86%  { transform: translateY(0) scale(1.3, 0.7); }
+      100% { transform: translateY(0) scale(1, 1); }
+    }
+  </style><link rel="stylesheet" href="/_astro/index@_@astro.DlnSCkkM.css?dpl=dpl_AeZAUSB36BYCvHxij6cQbqBbrMBz"></head> <body> <!-- LOADING SCREEN --> <div id="page-loader" aria-hidden="true"> <div class="pl-wrap"> <div class="pl-stage"> <img class="pl-o" src="/Logo-loader.webp" alt="" fetchpriority="high" decoding="async"> </div> <div class="pl-pct">0%</div> </div> </div> <script type="module">(()=>{const e=document.getElementById("page-loader");if(!e)return;const d=e.querySelector(".pl-stage"),t=e.querySelector(".pl-pct"),h=performance.now(),m=2500,l=.55,v=.18;let i=0;const u=s=>{const n=Math.min(1,(s-h)/m),c=n*n,a=l+(v-l)*c;d&&d.style.setProperty("--pl-dur",a.toFixed(3)+"s"),t&&(t.textContent=Math.min(99,Math.floor(n*100))+"%"),n<1&&!e.classList.contains("is-hidden")&&(i=requestAnimationFrame(u))};i=requestAnimationFrame(u);const f=()=>{cancelAnimationFrame(i);const s=t&&parseInt(t.textContent,10)||0,n=380,c=performance.now(),a=q=>{const p=Math.min(1,(q-c)/n);t&&(t.textContent=Math.round(s+(100-s)*p)+"%"),p<1?requestAnimationFrame(a):e.classList.add("is-hidden")};requestAnimationFrame(a)},y=()=>e.remove();e.addEventListener("transitionend",y,{once:!0});const o=document.querySelector("header video"),r=()=>requestAnimationFrame(f);o?o.readyState>=2?r():(o.addEventListener("loadeddata",r,{once:!0}),o.addEventListener("canplay",r,{once:!0}),o.addEventListener("error",r,{once:!0})):window.addEventListener("load",r,{once:!0}),setTimeout(f,m)})();</script> <!-- BACKGROUND FLOATERS --> <div id="bg-floaters" aria-hidden="true"></div> <!-- HEADER VIDEO --> <header> <video autoplay muted loop playsinline webkit-playsinline preload="auto" poster="/XOQf682Kf6.png" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny"> <source src="/header.mp4" type="video/mp4"> <source src="/header.webm" type="video/webm"> </video> <img id="header-poster-fallback" src="/XOQf682Kf6.png" alt="" aria-hidden="true" hidden> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();</script><script>(()=>{var A=Object.defineProperty;var C=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var l=(i,o,a)=>C(i,typeof o!="symbol"?o+"":o,a);var E=new Set(["__proto__","constructor","prototype"]);{let i={0:t=>y(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},o=t=>{let[h,e]=t;return h in i?i[h](e):void 0},a=t=>t.map(o),y=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([h,e])=>[h,o(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,"Component");l(this,"hydrator");l(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},p=this.querySelectorAll("template[data-astro-template]");for(let r of p){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let u;try{u=this.hasAttribute("props")?y(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let d;await this.hydrator(this)(this.Component,u,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});l(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[p,{default:u}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),d=this.getAttribute("component-export")||"default";if(d.includes(".")){this.Component=p;for(let m of d.split(".")){if(E.has(m)||!this.Component||typeof this.Component!="object"&&typeof this.Component!="function"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${d}`);this.Component=this.Component[m]}}else{if(E.has(d))throw new Error(`Invalid component export path: ${d}`);this.Component=p[d]}return this.hydrator=u,this.hydrate},e,this)}catch(n){console.error("[astro-island] Error hydrating %s",this.getAttribute("component-url"),n)}}attributeChangedCallback(){this.hydrate()}}l(f,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",f)}})();</script><astro-island uid="Z1BDQnd" prefix="r2" component-url="/_astro/hero-letters.CyCZ6X20.js?dpl=dpl_AeZAUSB36BYCvHxij6cQbqBbrMBz" component-export="default" renderer-url="/_astro/client.EJHNm1bu.js?dpl=dpl_AeZAUSB36BYCvHxij6cQbqBbrMBz" props="{}" ssr client="load" opts="{&quot;name&quot;:&quot;HeroLetters&quot;,&quot;value&quot;:true}" await-children><div class="hidden flex items-center gap-1 sm:gap-2 md:gap-4 mb-6 md:mb-8"><img src="/B-1.webp" alt="B" width="400" height="400" class="w-[75px] sm:w-[100px] md:w-[150px] lg:w-[200px] h-auto"/><img src="/Logo.webp" alt="O" width="400" height="400" class="relative z-10 w-[75px] sm:w-[100px] md:w-[150px] lg:w-[200px] h-auto -mx-2 sm:-mx-3 md:-mx-4"/><img src="/Logo.webp" alt="O" width="400" height="400" class="relative z-0 w-[75px] sm:w-[100px] md:w-[150px] lg:w-[200px] h-auto -mx-2 sm:-mx-3 md:-mx-4"/><img src="/B-2.webp" alt="B" width="400" height="400" class="w-[75px] sm:w-[100px] md:w-[150px] lg:w-[200px] h-auto"/></div><!--astro:end--></astro-island> <div class="header-buttons"> <!-- COPY CA --> <button class="btn btn-copy" id="copyBtn" onclick="copyCA()">Copy CA</button> </div> </header> <!-- glowing edge between header and sections --> <div class="header-glow-edge"></div> <!-- SECTIONS --> <div class="sky-sections"> <!-- DRIFTING CLOUDS --> <div class="bg-clouds" aria-hidden="true"> <div class="bg-cloud lg" style="top:8%;  animation-duration:28s; animation-delay:0s;"> <div class="cloud-body"></div></div> <div class="bg-cloud md" style="top:22%; animation-duration:22s; animation-delay:7s;"> <div class="cloud-body"></div></div> <div class="bg-cloud sm" style="top:38%; animation-duration:18s; animation-delay:3s;"> <div class="cloud-body"></div></div> <div class="bg-cloud lg" style="top:55%; animation-duration:32s; animation-delay:14s;"> <div class="cloud-body"></div></div> <div class="bg-cloud md" style="top:70%; animation-duration:25s; animation-delay:20s;"> <div class="cloud-body"></div></div> <div class="bg-cloud sm" style="top:85%; animation-duration:20s; animation-delay:10s;"> <div class="cloud-body"></div></div> <div class="bg-cloud md" style="top:14%; animation-duration:30s; animation-delay:18s;"> <div class="cloud-body"></div></div> <div class="bg-cloud lg" style="top:46%; animation-duration:26s; animation-delay:5s;"> <div class="cloud-body"></div></div> </div> <!-- DONATION SECTION --> <section class="donation-section"> <div class="donation-inner"> <!-- LEFT: big number --> <div class="donation-left" id="donationBox"> <span class="donation-eyebrow">Total donated</span> <div class="donation-number-wrap"> <div class="donation-amount">$<span id="counter" data-target="79346.21999999999">0</span></div> </div> <div class="donation-bar"><div class="donation-bar-fill"></div></div> <p class="donation-charity"><span class="heart">♥</span> Donated to <strong>Keep A Breast Foundation</strong></p> </div> <!-- RIGHT: keep a breast info --> <div class="info-box" id="infoBox"> <p class="info-box-title">What is <span class="whitespace-nowrap">Keep A Breast?</span></p> <p class="info-box-text">A nonprofit making breast cancer awareness feel human — not clinical. Art, bold campaigns, straight talk. Getting young people to actually pay attention and catch problems early.</p> <div class="socials-wrap"> <p class="socials-label">Their socials:</p> <div class="socials-icons"> <a href="https://www.instagram.com/keepabreast/" target="_blank" class="social-link social-ig" title="Instagram"> <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="2.2" fill="none"></rect><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2.2" fill="none"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg> </a> <a href="https://www.tiktok.com/@keepabreast" target="_blank" class="social-link social-tt" title="TikTok"> <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"></path></svg> </a> <a href="https://www.linkedin.com/company/the-keep-a-breast-foundation/?viewAsMember=true" target="_blank" class="social-link social-li" title="LinkedIn"> <svg viewBox="0 0 24 24" fill="white"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V22h-4V8.5zm7.5 0h3.8v1.85h.06c.53-1 1.82-2.05 3.74-2.05 4 0 4.74 2.63 4.74 6.05V22h-4v-6.8c0-1.62-.03-3.7-2.26-3.7-2.26 0-2.61 1.77-2.61 3.59V22H8V8.5z"></path></svg> </a> <a href="https://x.com/keepabreast" target="_blank" class="social-link social-x" title="X"> <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L2.25 2.25h6.588l4.253 5.622 5.153-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"></path></svg> </a> <a href="https://www.youtube.com/@keepabreast" target="_blank" class="social-link social-yt" title="YouTube"> <svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg> </a> </div> </div> </div> </div> </section> <!-- $BOOB SECTION --> <section class="boobzcoin-section"> <div class="boobzcoin-content"> <!-- LEFT: character --> <div class="boobzcoin-char-wrap"> <canvas id="boobCharCanvas"></canvas> </div> <!-- RIGHT: text --> <div class="boobzcoin-text-side" id="boobBox1"> <span class="boobzcoin-eyebrow">What is $boobzcoin?</span> <h2 class="boobzcoin-heading">The meme<br><span>everyone</span> gets.</h2> <p class="boobzcoin-body">No crypto history lesson. No deep lore. Just a simple idea that anyone instantly gets — and can't stop laughing at. $boobzcoin is built to go wide, not just deep in CT.</p> <a class="tweet-btn" href="https://twitter.com/intent/tweet?text=%24boob%20%23boobillions%20%40boobillions" target="_blank" rel="noopener"> <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L2.25 2.25h6.588l4.253 5.622 5.153-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"></path></svg>
+Tweet BOOBZCOIN
+</a> 
+<div class="boobzcoin-socials"> <span class="boobzcoin-socials-label">Follow:</span> <a href="https://x.com/boobillions" target="_blank" class="social-link social-x" title="X"> <svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L2.25 2.25h6.588l4.253 5.622 5.153-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"></path></svg> </a> <a href="https://www.instagram.com/keepabreast/" target="_blank" class="social-link social-ig" title="Instagram"> <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" stroke="white" stroke-width="2.2" fill="none"></rect><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2.2" fill="none"></circle><circle cx="17.5" cy="6.5" r="1.2" fill="white"></circle></svg> </a> <a href="https://www.tiktok.com/@keepabreast" target="_blank" class="social-link social-tt" title="TikTok"> <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"></path></svg> </a> <a href="https://t.me" target="_blank" class="social-link social-tg" title="Telegram"> <svg viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"></path></svg> </a> </div> </div> </div> </section> </div><!-- end .sky-sections --> <!-- HOW TO BUY SECTION --> <section class="buy-section"> <div class="bg-clouds" aria-hidden="true"> <div class="bg-cloud lg" style="top:10%; animation-duration:28s; animation-delay:5s;"><div class="cloud-body"></div></div> <div class="bg-cloud sm" style="top:60%; animation-duration:18s; animation-delay:14s;"><div class="cloud-body"></div></div> <div class="bg-cloud md" style="top:85%; animation-duration:22s; animation-delay:3s;"><div class="cloud-body"></div></div> </div> <div class="buy-inner"> <div class="buy-title-wrap"> <canvas id="buyTitleCanvas"></canvas> </div> <script>(()=>{var a=(s,i,o)=>{let r=async()=>{await(await s())()},t=typeof i.value=="object"?i.value:void 0,c={rootMargin:t==null?void 0:t.rootMargin},n=new IntersectionObserver(e=>{for(let l of e)if(l.isIntersecting){n.disconnect(),r();break}},c);for(let e of o.children)n.observe(e)};(self.Astro||(self.Astro={})).visible=a;window.dispatchEvent(new Event("astro:visible"));})();</script><astro-island uid="Z7dUlN" prefix="r3" component-url="/_astro/BoobCounter.DvUeEqTx.js?dpl=dpl_AeZAUSB36BYCvHxij6cQbqBbrMBz" component-export="default" renderer-url="/_astro/client.EJHNm1bu.js?dpl=dpl_AeZAUSB36BYCvHxij6cQbqBbrMBz" props="{}" ssr client="visible" opts="{&quot;name&quot;:&quot;BoobCounter&quot;,&quot;value&quot;:true}" await-children><div style="font-family:&#x27;Bangers&#x27;, system-ui, sans-serif;font-size:clamp(2rem, 6vw, 4rem);text-align:center;color:#ff5aa8;text-shadow:3px 3px 0 #fff, 6px 6px 0 rgba(0,0,0,0.15);letter-spacing:2px;padding:1rem"><span class="whitespace-nowrap">1,000,000,000<!-- --> boobs</span> <span class="whitespace-nowrap">and counting</span></div><!--astro:end--></astro-island> <div class="buy-action-row"> <a class="btn btn-buy" href="https://jup.ag/swap?sell=So11111111111111111111111111111111111111112&buy=abcd" target="_blank" rel="noopener">Buy Now</a> <a class="btn btn-apple" href="https://fomo.family/coin?address=abcd&chainId=1399811149&r=boobzcoin&source=share_link" target="_blank" rel="noopener">Buy with Apple Pay</a> </div> <div class="buy-tabs"> <button class="buy-tab active" onclick="showBuyPanel('sol', this)">Buy with $SOL</button> <button class="buy-tab" onclick="showBuyPanel('apple', this)">Buy with Apple Pay</button> </div> <!-- SOL PANEL --> <div class="buy-panel active" id="buyPanel-sol"> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">1</div> <div class="buy-step-line"></div> </div> <div class="buy-step-body"> <p class="buy-step-title">Download Phantom Wallet</p> <p class="buy-step-text">Get the Phantom Wallet from the App Store or as a Chrome extension.</p> <a class="buy-app-logo-link" href="https://phantom.app" target="_blank" rel="noopener"> <img class="buy-app-logo" src="https://logo.clearbit.com/phantom.app" alt="Phantom" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"> <span class="buy-app-logo-fallback" style="display:none">phantom.app →</span> </a> </div> </div> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">2</div> <div class="buy-step-line"></div> </div> <div class="buy-step-body"> <p class="buy-step-title">Buy $SOL</p> <p class="buy-step-text">Buy $SOL directly inside the Phantom app or extension using your card or bank account.</p> </div> </div> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">3</div> </div> <div class="buy-step-body"> <p class="buy-step-title">Swap $SOL for $boobzcoin</p> <p class="buy-step-text">Paste the CA into Phantom and swap your $SOL for $boobzcoin.</p> <button class="buy-copy-ca-btn" onclick="copyCA()">COPY CA</button> </div> </div> </div> <!-- APPLE PAY PANEL --> <div class="buy-panel" id="buyPanel-apple"> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">1</div> <div class="buy-step-line"></div> </div> <div class="buy-step-body"> <p class="buy-step-title">Download the Fomo App</p> <p class="buy-step-text">Download the Fomo app from the App Store and create an account.</p> <a class="buy-app-logo-link" href="https://fomo.family/" target="_blank" rel="noopener"> <img class="buy-app-logo" src="https://logo.clearbit.com/fomo.family" alt="Fomo" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"> <span class="buy-app-logo-fallback" style="display:none">fomo.family →</span> </a> </div> </div> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">2</div> <div class="buy-step-line"></div> </div> <div class="buy-step-body"> <p class="buy-step-title">Find $boobzcoin</p> <p class="buy-step-text">Search for $boobzcoin in the app — or copy the CA and paste it directly.</p> <button class="buy-copy-ca-btn" onclick="copyCA()">COPY CA</button> </div> </div> <div class="buy-step"> <div class="buy-step-connector"> <div class="buy-step-num">3</div> </div> <div class="buy-step-body"> <p class="buy-step-title">Buy with Apple Pay</p> <p class="buy-step-text">Tap the Apple Pay logo in the app and complete your purchase in seconds.</p> </div> </div> </div> </div> </section> <!-- ART SECTION --> <section class="art-section"> <div class="bg-clouds" aria-hidden="true"> <div class="bg-cloud lg" style="top:12%; animation-duration:26s; animation-delay:2s;"><div class="cloud-body"></div></div> <div class="bg-cloud md" style="top:55%; animation-duration:20s; animation-delay:9s;"><div class="cloud-body"></div></div> <div class="bg-cloud sm" style="top:80%; animation-duration:16s; animation-delay:4s;"><div class="cloud-body"></div></div> </div> <div class="section-title-img-wrap"> <canvas id="artTitleCanvas" class="section-title-canvas"></canvas> </div> <div class="art-rows"> <div class="art-row art-row-1" id="artRow1"></div> <div class="art-row art-row-2" id="artRow2"></div> </div> </section> <!-- GAME SECTION --> <section class="game-section"> <div class="bg-clouds" aria-hidden="true"> <div class="bg-cloud md" style="top:8%;  animation-duration:24s; animation-delay:0s;"><div class="cloud-body"></div></div> <div class="bg-cloud lg" style="top:50%; animation-duration:30s; animation-delay:12s;"><div class="cloud-body"></div></div> <div class="bg-cloud sm" style="top:75%; animation-duration:18s; animation-delay:6s;"><div class="cloud-body"></div></div> </div> <div class="section-title-img-wrap"> <canvas id="gameTitleCanvas" class="section-title-canvas"></canvas> </div> <div class="game-rotate-gate" role="dialog" aria-label="Rotate to play"> <div class="rotate-icon" aria-hidden="true">📱</div> <p>Rotate your phone sideways to play the minigame.</p> </div> <div class="game-level-tabs"> <button class="game-level-tab active" data-lvl="0">Level 1</button> <button class="game-level-tab" data-lvl="1">Level 2</button> <button class="game-level-tab" data-lvl="2">Level 3</button> </div> <canvas id="gameCanvas"></canvas> <div class="game-ui"> <div class="game-stat"><span class="stat-icon">★</span> Score <span class="stat-val" id="gameScoreVal">0</span></div> <div class="game-stat"><span class="stat-icon">#</span> Level <span class="stat-val" id="gameLevelVal">1</span></div> <button class="game-btn" id="gameResetBtn">Reset</button> <button class="game-btn" id="gameNextBtn" style="display:none">Next Level !</button> </div> </section> <script>
+
+    // ── SCROLL TO TOP ON LOAD ──
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    // Force video play on first touch (iOS low-power mode / autoplay block)
+    document.addEventListener('touchstart', () => {
+      document.querySelector('header video')?.play();
+    }, { once: true });
+
+    // Autoplay-rejection fallback: swap to static poster image
+    (() => {
+      const video = document.querySelector('header video');
+      const fallback = document.getElementById('header-poster-fallback');
+      if (!video || !fallback) return;
+      const swap = () => {
+        video.style.display = 'none';
+        fallback.hidden = false;
+      };
+      video.muted = true;
+      video.defaultMuted = true;
+      const p = video.play();
+      if (p && typeof p.then === 'function') {
+        p.catch(swap);
+      }
+      // If video stays paused after a beat, also fall back
+      setTimeout(() => {
+        if (video.paused || video.readyState < 2) swap();
+      }, 1500);
+    })();
+
+    // ── COUNT-UP ANIMATION ──
+    const el   = document.getElementById('counter');
+    const wrap = document.getElementById('donationBox');
+    let liveTarget = Number(el?.dataset.target) || 70174.19;
+    let animStartedAt = 0;
+    let animFromValue = 0;
+    let animating = false;
+    const DURATION = 2200;
+
+    function formatNum(n) {
+      return n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function runAnimation() {
+      if (animating) return;
+      animating = true;
+      wrap.classList.add('visible');
+      animStartedAt = performance.now();
+      animFromValue = 0;
+      function step(now) {
+        const progress = Math.min((now - animStartedAt) / DURATION, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = animFromValue + (liveTarget - animFromValue) * eased;
+        el.textContent = formatNum(value);
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = formatNum(liveTarget);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // If a fresher value lands after the animation has started/finished,
+    // smoothly retarget from the current displayed value.
+    function retargetTo(newTotal) {
+      if (!Number.isFinite(newTotal) || newTotal <= 0) return;
+      if (newTotal === liveTarget) return;
+      liveTarget = newTotal;
+      if (!animating) return;
+      const currentText = (el.textContent || '0').replace(/\./g, '').replace(',', '.');
+      const currentValue = parseFloat(currentText) || 0;
+      animFromValue = currentValue;
+      animStartedAt = performance.now();
+      // step loop is already running; it reads the updated values
+    }
+
+    // Fetch live total in background; retarget if we already animated to a stale value.
+    fetch('/api/donations', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(d => { if (d?.total) retargetTo(d.total); })
+      .catch(() => {});
+
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        runAnimation();
+        document.getElementById('donationBox').classList.add('visible');
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    observer.observe(document.getElementById('donationBox'));
+
+    // Info box fade-in on scroll
+    const infoObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        document.getElementById('infoBox').classList.add('visible');
+        infoObserver.disconnect();
+      }
+    }, { threshold: 0.2 });
+    infoObserver.observe(document.getElementById('infoBox'));
+
+    // $boobzcoin box fade-in on scroll
+    const boobEl = document.getElementById('boobBox1');
+    const boobOb = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        boobEl.classList.add('visible');
+        boobOb.disconnect();
+      }
+    }, { threshold: 0.15 });
+    boobOb.observe(boobEl);
+
+    // ── BOOB CHARACTER CANVAS (green-bg removal) ──
+    (function(){
+      const canvas = document.getElementById('boobCharCanvas');
+      if(!canvas) return;
+      const ctx2 = canvas.getContext('2d');
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function(){
+        canvas.width  = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        ctx2.drawImage(img, 0, 0);
+        try {
+          const imageData = ctx2.getImageData(0, 0, canvas.width, canvas.height);
+          const d = imageData.data;
+          for(let i = 0; i < d.length; i += 4){
+            const r = d[i], g = d[i+1], b = d[i+2];
+            // remove green-ish background pixels
+            if(g > 80 && g > r * 1.25 && g > b * 1.1){
+              // soft edge: partial transparency based on how "green" it is
+              const greenness = Math.min(1, (g - Math.max(r,b)) / 60);
+              d[i+3] = Math.round(d[i+3] * (1 - greenness));
+            }
+          }
+          ctx2.putImageData(imageData, 0, 0);
+        } catch(e) {
+          // CORS / security error — just show image as-is
+          console.warn('boobzcoin canvas pixel read blocked:', e);
+        }
+      };
+      img.onerror = function(){
+        // fallback: just show the image via CSS if canvas fails
+        canvas.style.display = 'none';
+        const fallback = document.createElement('img');
+        fallback.src = 'Logo.webp';
+        fallback.style.cssText = 'width:100%;height:auto;animation:boobFloat 3.6s ease-in-out infinite;filter:drop-shadow(0 24px 32px rgba(0,0,0,0.35));';
+        canvas.parentNode.appendChild(fallback);
+      };
+      img.src = 'Logo.webp';
+    })();
+
+    // ── BACKGROUND FLOATERS ──
+    (function(){
+      const files = [
+        'boobzcoin background/Untitled design.webp',
+        'boobzcoin background/Untitled design 2.webp',
+        'boobzcoin background/Untitled design 3.webp',
+        'boobzcoin background/Untitled design 4.webp',
+        'boobzcoin background/Untitled design 5.webp',
+        'boobzcoin background/Untitled design 6.webp',
+      ];
+
+      const container = document.getElementById('bg-floaters');
+      // 3 instances each = 18 floaters, each on a unique path across the screen
+      const COUNT_PER = 3;
+
+      function removeGreen(img) {
+        const c = document.createElement('canvas');
+        c.width = img.naturalWidth; c.height = img.naturalHeight;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        try {
+          const id = ctx.getImageData(0, 0, c.width, c.height);
+          const d = id.data;
+          for (let i = 0; i < d.length; i += 4) {
+            const r = d[i], g = d[i+1], b = d[i+2];
+            if (g > 65 && g > r * 1.18 && g > b * 1.05) {
+              const gr = Math.min(1, (g - Math.max(r,b)) / 50);
+              d[i+3] = Math.round(d[i+3] * (1 - gr));
+            }
+          }
+          ctx.putImageData(id, 0, 0);
+          return c.toDataURL('image/png');
+        } catch(e) { return null; }
+      }
+
+      function rand(a, b) { return a + Math.random() * (b - a); }
+      function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+      // Pre-computed spread: evenly distribute starting positions across screen edges
+      // so floaters come from all sides and different positions
+      function spawnFloater(dataUrl, imgIdx, instanceIdx) {
+        const el = document.createElement('img');
+        el.src = dataUrl;
+        el.draggable = false;
+
+        const size    = rand(100, 210);
+        const opacity = rand(0.10, 0.22);
+        const dur     = rand(28, 58);
+        // stagger delays so each floater starts at a different point in its cycle
+        const totalFloaters = files.length * COUNT_PER;
+        const slotIndex = imgIdx * COUNT_PER + instanceIdx;
+        const delay = -(dur * slotIndex / totalFloaters);
+
+        // Pick a random travel direction
+        const dir = pick(['ltr','rtl','ttb','btt','diag1','diag2']);
+        const rot1 = rand(-20, 20);
+        const rot2 = rand(-15, 15);
+        const W = 2600; // wider than any viewport
+        const H = 2400;
+
+        let fromX, fromY, toX, toY, midX, midY, crossX, crossY;
+        let posStyle;
+
+        if (dir === 'ltr') {
+          // left → right, fixed vertical band
+          const band = rand(2, 90); // %vh
+          fromX = -size - 60; fromY = 0;
+          midX  = W * 0.5;    midY  = rand(-80, 80);
+          toX   = W + size + 60; toY = rand(-60, 60);
+          posStyle = `top:${band}vh; left:0;`;
+        } else if (dir === 'rtl') {
+          const band = rand(2, 90);
+          fromX = W + size + 60; fromY = 0;
+          midX  = W * 0.5;       midY  = rand(-80, 80);
+          toX   = -size - 60;    toY   = rand(-60, 60);
+          posStyle = `top:${band}vh; left:0;`;
+        } else if (dir === 'ttb') {
+          const band = rand(2, 90); // %vw
+          fromX = 0;          fromY = -size - 60;
+          midX  = rand(-80, 80); midY = H * 0.5;
+          toX   = rand(-60, 60); toY  = H + size + 60;
+          posStyle = `top:0; left:${band}vw;`;
+        } else if (dir === 'btt') {
+          const band = rand(2, 90);
+          fromX = 0;             fromY = H + size + 60;
+          midX  = rand(-80, 80); midY  = H * 0.5;
+          toX   = rand(-60, 60); toY   = -size - 60;
+          posStyle = `top:0; left:${band}vw;`;
+        } else if (dir === 'diag1') {
+          // top-left → bottom-right
+          fromX = -size - 60; fromY = -size - 60;
+          midX  = W * 0.4 + rand(-100,100); midY = H * 0.4 + rand(-100,100);
+          toX   = W + size + 60; toY = H + size + 60;
+          posStyle = `top:0; left:0;`;
+        } else {
+          // diag2: top-right → bottom-left
+          fromX = W + size + 60; fromY = -size - 60;
+          midX  = W * 0.6 + rand(-100,100); midY = H * 0.4 + rand(-100,100);
+          toX   = -size - 60; toY = H + size + 60;
+          posStyle = `top:0; left:0;`;
+        }
+
+        const name = `bgf_${imgIdx}_${instanceIdx}`;
+        const st = document.createElement('style');
+        st.textContent = `
+          @keyframes ${name} {
+            0%   { transform:translate(${fromX}px,${fromY}px) rotate(${-rot1}deg) scale(0.85); opacity:0; }
+            8%   { opacity:${opacity}; }
+            45%  { transform:translate(${midX}px,${midY}px) rotate(${rot1}deg) scale(1); opacity:${opacity}; }
+            92%  { opacity:${opacity}; }
+            100% { transform:translate(${toX}px,${toY}px) rotate(${rot2}deg) scale(0.9); opacity:0; }
+          }
+        `;
+        document.head.appendChild(st);
+
+        el.style.cssText = `
+          position:absolute;
+          ${posStyle}
+          width:${size}px;
+          height:auto;
+          opacity:0;
+          animation:${name} ${dur}s linear ${delay}s infinite;
+          will-change:transform;
+          user-select:none;
+          -webkit-user-drag:none;
+          pointer-events:none;
+        `;
+
+        container.appendChild(el);
+      }
+
+      files.forEach((src, idx) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+          const url = removeGreen(img);
+          for (let j = 0; j < COUNT_PER; j++) {
+            spawnFloater(url || img.src, idx, j);
+          }
+        };
+        img.onerror = function() { console.warn('floater missing:', src); };
+        img.src = src;
+      });
+    })();
+
+    // ── SECTION TITLE CANVASES (white-bg removal) ──
+    (function(){
+      function loadTitleCanvas(canvasId, src) {
+        const canvas = document.getElementById(canvasId);
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function(){
+          canvas.width  = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          // set CSS display size
+          const maxW = Math.min(560, window.innerWidth * 0.8);
+          const scale = maxW / img.naturalWidth;
+          canvas.style.width  = Math.round(img.naturalWidth  * scale) + 'px';
+          canvas.style.height = Math.round(img.naturalHeight * scale) + 'px';
+          ctx.drawImage(img, 0, 0);
+          try {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imageData.data;
+            for(let i = 0; i < d.length; i += 4){
+              const r = d[i], g = d[i+1], b = d[i+2];
+              // remove near-white pixels with soft edge
+              const brightness = (r + g + b) / 3;
+              const whiteness  = Math.min(r, g, b);
+              if(whiteness > 210 && brightness > 220){
+                const alpha = Math.min(1, (255 - whiteness) / 30);
+                d[i+3] = Math.round(alpha * 255);
+              }
+            }
+            ctx.putImageData(imageData, 0, 0);
+          } catch(e) {
+            console.warn('title canvas pixel read blocked:', e);
+          }
+        };
+        img.src = src;
+      }
+      loadTitleCanvas('artTitleCanvas',  'boobzcoin art.webp');
+      loadTitleCanvas('gameTitleCanvas', 'shoot the.boobzcoin.webp');
+
+      // buy title — green bg removal
+      (function(){
+        const canvas = document.getElementById('buyTitleCanvas');
+        if(!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function(){
+          canvas.width  = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const maxW = Math.min(520, window.innerWidth * 0.85);
+          const scale = maxW / img.naturalWidth;
+          canvas.style.width  = Math.round(img.naturalWidth  * scale) + 'px';
+          canvas.style.height = Math.round(img.naturalHeight * scale) + 'px';
+          ctx.drawImage(img, 0, 0);
+          try {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imageData.data;
+            for(let i = 0; i < d.length; i += 4){
+              const r = d[i], g = d[i+1], b = d[i+2];
+              if(g > 65 && g > r * 1.18 && g > b * 1.05){
+                const gr = Math.min(1, (g - Math.max(r,b)) / 50);
+                d[i+3] = Math.round(d[i+3] * (1 - gr));
+              }
+            }
+            ctx.putImageData(imageData, 0, 0);
+          } catch(e) {
+            console.warn('buy title canvas blocked:', e);
+          }
+        };
+        img.src = 'howtobuyboob.webp';
+      })();
+    })();
+
+    // ── ART COLLAGE ──
+    (function() {
+      const all = ['boobart2/Untitled_Artwork 109.webp','boobart2/Untitled_Artwork 112.webp','boobart2/Untitled_Artwork 121.webp','boobart2/Untitled_Artwork 128.webp','boobart2/Untitled_Artwork 138.webp','boobart2/Untitled_Artwork 140.webp','boobart2/Untitled_Artwork 141.webp','boobart2/Untitled_Artwork 142.webp','boobart2/Untitled_Artwork 143.webp','boobart2/Untitled_Artwork 145.webp','boobart2/Untitled_Artwork 146.webp','boobart2/Untitled_Artwork 147.webp','boobart2/Untitled_Artwork 148.webp','boobart2/Untitled_Artwork 149.webp','boobart2/Untitled_Artwork 15.webp','boobart2/Untitled_Artwork 150.webp','boobart2/Untitled_Artwork 151.webp','boobart2/Untitled_Artwork 152.webp','boobart2/Untitled_Artwork 153.webp','boobart2/Untitled_Artwork 154.webp','boobart2/Untitled_Artwork 16.webp','boobart2/Untitled_Artwork 17.webp','boobart2/Untitled_Artwork 18.webp','boobart2/Untitled_Artwork 19.webp','boobart2/Untitled_Artwork 2.webp','boobart2/Untitled_Artwork 20.webp','boobart2/Untitled_Artwork 3.webp','boobart2/Untitled_Artwork 69.webp','boobart2/Untitled_Artwork 80.webp','boobart2/Untitled_Artwork 88.webp','boobart2/Untitled_Artwork 93.webp','boobart2/Untitled_Artwork(1).webp','boobart2/Untitled_Artwork(10).webp','boobart2/Untitled_Artwork(100).webp','boobart2/Untitled_Artwork(101).webp','boobart2/Untitled_Artwork(102).webp','boobart2/Untitled_Artwork(103).webp','boobart2/Untitled_Artwork(104).webp','boobart2/Untitled_Artwork(105).webp','boobart2/Untitled_Artwork(106).webp','boobart2/Untitled_Artwork(107).webp','boobart2/Untitled_Artwork(108).webp','boobart2/Untitled_Artwork(109).webp','boobart2/Untitled_Artwork(11).webp','boobart2/Untitled_Artwork(110).webp','boobart2/Untitled_Artwork(111).webp','boobart2/Untitled_Artwork(112).webp','boobart2/Untitled_Artwork(113).webp','boobart2/Untitled_Artwork(114).webp','boobart2/Untitled_Artwork(115).webp','boobart2/Untitled_Artwork(116).webp','boobart2/Untitled_Artwork(117).webp','boobart2/Untitled_Artwork(118).webp','boobart2/Untitled_Artwork(119).webp','boobart2/Untitled_Artwork(12).webp','boobart2/Untitled_Artwork(120).webp','boobart2/Untitled_Artwork(121).webp','boobart2/Untitled_Artwork(122).webp','boobart2/Untitled_Artwork(123).webp','boobart2/Untitled_Artwork(13).webp','boobart2/Untitled_Artwork(14).webp','boobart2/Untitled_Artwork(15).webp','boobart2/Untitled_Artwork(16).webp','boobart2/Untitled_Artwork(17).webp','boobart2/Untitled_Artwork(18).webp','boobart2/Untitled_Artwork(19).webp','boobart2/Untitled_Artwork(2).webp','boobart2/Untitled_Artwork(20).webp','boobart2/Untitled_Artwork(21).webp','boobart2/Untitled_Artwork(22).webp','boobart2/Untitled_Artwork(23).webp','boobart2/Untitled_Artwork(24).webp','boobart2/Untitled_Artwork(25).webp','boobart2/Untitled_Artwork(26).webp','boobart2/Untitled_Artwork(27).webp','boobart2/Untitled_Artwork(28).webp','boobart2/Untitled_Artwork(29).webp','boobart2/Untitled_Artwork(3).webp','boobart2/Untitled_Artwork(30).webp','boobart2/Untitled_Artwork(31).webp','boobart2/Untitled_Artwork(32).webp','boobart2/Untitled_Artwork(33).webp','boobart2/Untitled_Artwork(34).webp','boobart2/Untitled_Artwork(35).webp','boobart2/Untitled_Artwork(36).webp','boobart2/Untitled_Artwork(37).webp','boobart2/Untitled_Artwork(38).webp','boobart2/Untitled_Artwork(39).webp','boobart2/Untitled_Artwork(4).webp','boobart2/Untitled_Artwork(40).webp','boobart2/Untitled_Artwork(41).webp','boobart2/Untitled_Artwork(42).webp','boobart2/Untitled_Artwork(43).webp','boobart2/Untitled_Artwork(44).webp','boobart2/Untitled_Artwork(45).webp','boobart2/Untitled_Artwork(46).webp','boobart2/Untitled_Artwork(47).webp','boobart2/Untitled_Artwork(48).webp','boobart2/Untitled_Artwork(49).webp','boobart2/Untitled_Artwork(5).webp','boobart2/Untitled_Artwork(50).webp','boobart2/Untitled_Artwork(51).webp','boobart2/Untitled_Artwork(52).webp','boobart2/Untitled_Artwork(53).webp','boobart2/Untitled_Artwork(54).webp','boobart2/Untitled_Artwork(55).webp','boobart2/Untitled_Artwork(56).webp','boobart2/Untitled_Artwork(57).webp','boobart2/Untitled_Artwork(58).webp','boobart2/Untitled_Artwork(59).webp','boobart2/Untitled_Artwork(6).webp','boobart2/Untitled_Artwork(60).webp','boobart2/Untitled_Artwork(61).webp','boobart2/Untitled_Artwork(62).webp','boobart2/Untitled_Artwork(63).webp','boobart2/Untitled_Artwork(64).webp','boobart2/Untitled_Artwork(65).webp','boobart2/Untitled_Artwork(66).webp','boobart2/Untitled_Artwork(67).webp','boobart2/Untitled_Artwork(68).webp','boobart2/Untitled_Artwork(69).webp','boobart2/Untitled_Artwork(7).webp','boobart2/Untitled_Artwork(70).webp','boobart2/Untitled_Artwork(71).webp','boobart2/Untitled_Artwork(72).webp','boobart2/Untitled_Artwork(73).webp','boobart2/Untitled_Artwork(74).webp','boobart2/Untitled_Artwork(75).webp','boobart2/Untitled_Artwork(76).webp','boobart2/Untitled_Artwork(77).webp','boobart2/Untitled_Artwork(78).webp','boobart2/Untitled_Artwork(79).webp','boobart2/Untitled_Artwork(8).webp','boobart2/Untitled_Artwork(80).webp','boobart2/Untitled_Artwork(81).webp','boobart2/Untitled_Artwork(82).webp','boobart2/Untitled_Artwork(83).webp','boobart2/Untitled_Artwork(84).webp','boobart2/Untitled_Artwork(85).webp','boobart2/Untitled_Artwork(86).webp','boobart2/Untitled_Artwork(87).webp','boobart2/Untitled_Artwork(88).webp','boobart2/Untitled_Artwork(89).webp','boobart2/Untitled_Artwork(9).webp','boobart2/Untitled_Artwork(90).webp','boobart2/Untitled_Artwork(91).webp','boobart2/Untitled_Artwork(92).webp','boobart2/Untitled_Artwork(93).webp','boobart2/Untitled_Artwork(94).webp','boobart2/Untitled_Artwork(95).webp','boobart2/Untitled_Artwork(96).webp','boobart2/Untitled_Artwork(97).webp','boobart2/Untitled_Artwork(98).webp','boobart2/Untitled_Artwork(99).webp','boobart2/Untitled_Artwork.webp','boobart2/copy_745A691D-B47E-4DE6-ADAB-18D310280749.webp','boobart2/copy_84D1C297-D10F-4B29-AA32-087AB93EF045.webp','boobart2/copy_B33F0552-A19E-428D-8C18-A11357D9DAA2.webp'];
+
+      // shuffle for visual variety
+      for (let i = all.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [all[i], all[j]] = [all[j], all[i]];
+      }
+
+      const half = Math.ceil(all.length / 2);
+      const rows = [
+        { el: document.getElementById('artRow1'), imgs: all.slice(0, half) },
+        { el: document.getElementById('artRow2'), imgs: all.slice(half) },
+      ];
+
+      rows.forEach(({ el, imgs }) => {
+        // two identical halves for seamless loop
+        for (let half = 0; half < 2; half++) {
+          const inner = document.createElement('div');
+          inner.className = 'art-row-inner';
+          imgs.forEach(src => {
+            const item = document.createElement('div');
+            item.className = 'art-item';
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = '$boobzcoin art';
+
+            const dl = document.createElement('a');
+            dl.className = 'dl-btn';
+            dl.href = src;
+            dl.download = '';
+            dl.textContent = 'Save';
+
+            item.appendChild(img);
+            item.appendChild(dl);
+            inner.appendChild(item);
+          });
+          el.appendChild(inner);
+        }
+      });
+    })();
+
+    // ─────────────────────────────────────────
+    // $BOOB LAUNCHER — 3 LEVELS
+    // ─────────────────────────────────────────
+    (function() {
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      const W = 860, H = 460;
+      // HiDPI — crisp on retina displays
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
+
+      const GY = H - 75; // ground Y = 385
+      const GRAV = 0.38;
+      const SX = 140, SY = GY - 90; // slingshot tip
+      const PULL = 88;
+      const POWER = 0.44;
+
+      const boobImg = new Image();
+      boobImg.src = 'boob1.webp';
+
+      let currentLevel = 0, score = 0, birdsLeft = 0;
+      let bird = null, blocks = [], pigs = [], particles = [];
+      let state = 'aiming'; // aiming | flying | waiting | levelwin | gameover | gamecomplete
+      let drag = { on: false, x: SX, y: SY };
+      let spawnTimeout = null;
+      let waitFrames = 0; // frame counter used instead of setTimeout
+
+      // ── Per-level visual themes ─────────────
+      const THEMES = [
+        { // Level 1 — Bright day
+          skyA:'#3a9ed8', skyB:'#b8e4ff',
+          hillA:'rgba(60,140,50,0.7)', hillB:'rgba(35,100,25,0.5)',
+          groundA:'#65cc50', groundB:'#4a9a30', dirtA:'#8b5a2b', dirtB:'#5a3010',
+          clouds:[[80,52,40],[230,38,32],[430,58,48],[640,42,36],[800,55,42]],
+          hills:[[380,200],[650,160],[130,140]],
+          mode:'day'
+        },
+        { // Level 2 — Fiery sunset
+          skyA:'#8c1900', skyB:'#f07010',
+          hillA:'rgba(80,40,0,0.8)', hillB:'rgba(45,18,0,0.6)',
+          groundA:'#b07020', groundB:'#8a5010', dirtA:'#6b3a10', dirtB:'#3a1800',
+          clouds:[[60,65,34],[290,45,26],[560,70,42],[790,52,36]],
+          hills:[[350,210],[700,175],[125,155]],
+          mode:'sunset'
+        },
+        { // Level 3 — Night
+          skyA:'#060618', skyB:'#0d1a5e',
+          hillA:'rgba(20,20,45,0.9)', hillB:'rgba(10,10,25,0.7)',
+          groundA:'#383838', groundB:'#262626', dirtA:'#1e1e1e', dirtB:'#101010',
+          clouds:[[110,75,28],[340,60,22],[640,80,35],[820,65,30]],
+          hills:[[320,215],[640,180],[100,160]],
+          mode:'night'
+        }
+      ];
+
+      // ── Level definitions ──────────────────
+      const LEVELS = [
+        { // Level 1 — Wooden crates (easy, open)
+          birds: 3,
+          pigs: [
+            {x:618, y:GY-76, r:24, hp:1},
+            {x:758, y:GY-76, r:24, hp:1},
+          ],
+          blocks: [
+            {x:593,y:GY-52,w:52,h:52,type:'wood',hp:2},
+            {x:733,y:GY-52,w:52,h:52,type:'wood',hp:2},
+            {x:618,y:GY-62,w:140,h:14,type:'wood',hp:1},
+          ]
+        },
+        { // Level 2 — Stone towers (medium, vertical)
+          birds: 4,
+          pigs: [
+            {x:588, y:GY-134, r:24, hp:2},
+            {x:728, y:GY-134, r:24, hp:2},
+            {x:658, y:GY-218, r:20, hp:1},
+          ],
+          blocks: [
+            {x:558,y:GY-122,w:62,h:122,type:'stone',hp:3},
+            {x:556,y:GY-138,w:66,h:18,type:'stone',hp:2},
+            {x:698,y:GY-122,w:62,h:122,type:'stone',hp:3},
+            {x:696,y:GY-138,w:66,h:18,type:'stone',hp:2},
+            {x:618,y:GY-182,w:82,h:18,type:'stone',hp:2},
+            {x:638,y:GY-218,w:42,h:38,type:'stone',hp:2},
+            {x:636,y:GY-234,w:46,h:18,type:'stone',hp:1},
+          ]
+        },
+        { // Level 3 — Brick fortress (hard, dense)
+          birds: 5,
+          pigs: [
+            {x:570, y:GY-96, r:24, hp:3},
+            {x:668, y:GY-96, r:24, hp:2},
+            {x:766, y:GY-96, r:24, hp:2},
+            {x:618, y:GY-194, r:20, hp:2},
+            {x:718, y:GY-170, r:20, hp:1},
+          ],
+          blocks: [
+            {x:538,y:GY-84,w:272,h:84,type:'brick',hp:4},
+            {x:536,y:GY-102,w:276,h:20,type:'brick',hp:3},
+            {x:534,y:GY-162,w:62,h:62,type:'brick',hp:3},
+            {x:532,y:GY-180,w:66,h:20,type:'brick',hp:2},
+            {x:672,y:GY-148,w:62,h:48,type:'brick',hp:3},
+            {x:670,y:GY-166,w:66,h:20,type:'brick',hp:2},
+            {x:596,y:GY-132,w:44,h:32,type:'brick',hp:2},
+          ]
+        }
+      ];
+
+      // ── Init level ─────────────────────────
+      function initLevel(lvl, keepScore) {
+        if (spawnTimeout) { clearTimeout(spawnTimeout); spawnTimeout = null; }
+        waitFrames = 0;
+        currentLevel = lvl;
+        const def = LEVELS[lvl];
+        birdsLeft = def.birds;
+        if (!keepScore) score = 0;
+        blocks = def.blocks.map(b => { const hp = b.hp != null ? b.hp : 2; return {...b, hp, maxHp: hp}; });
+        pigs   = def.pigs.map(p  => ({ ...p, maxHp: p.hp }));
+        particles = [];
+        document.getElementById('gameNextBtn').style.display = 'none';
+        document.querySelectorAll('.game-level-tab').forEach((t,i) => t.classList.toggle('active', i===lvl));
+        spawnBird();
+      }
+
+      function spawnBird() {
+        bird = { x:SX, y:SY, vx:0, vy:0, r:26, launched:false, frames:0 };
+        drag = { on:false, x:SX, y:SY };
+        state = 'aiming';
+      }
+
+      function burst(x,y,col,n=14){
+        for(let i=0;i<n;i++){
+          const a=Math.random()*Math.PI*2, s=2+Math.random()*6;
+          particles.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-3,life:1,col,r:3+Math.random()*4});
+        }
+      }
+
+      function circleAABB(cx,cy,cr,rx,ry,rw,rh){
+        return (cx-Math.max(rx,Math.min(cx,rx+rw)))**2+(cy-Math.max(ry,Math.min(cy,ry+rh)))**2 < cr*cr;
+      }
+
+      // ── Draw helpers ───────────────────────
+      function drawBg(){
+        const th = THEMES[currentLevel];
+        // Sky gradient
+        const sg = ctx.createLinearGradient(0,0,0,GY);
+        sg.addColorStop(0,th.skyA); sg.addColorStop(1,th.skyB);
+        ctx.fillStyle=sg; ctx.fillRect(0,0,W,GY);
+
+        // Night: stars + moon
+        if(th.mode==='night'){
+          [[45,22],[170,14],[310,38],[490,10],[595,32],[748,18],[828,42],[140,50],[410,16],[680,48],[240,28],[560,8],[740,58],[80,62],[350,25]].forEach(([sx,sy])=>{
+            ctx.fillStyle='rgba(255,255,255,0.85)';
+            ctx.beginPath(); ctx.arc(sx,sy,0.9+Math.sin(sx)*0.4,0,Math.PI*2); ctx.fill();
+          });
+          ctx.save();
+          ctx.shadowColor='rgba(255,255,200,0.7)'; ctx.shadowBlur=24;
+          ctx.fillStyle='rgba(255,255,220,0.96)';
+          ctx.beginPath(); ctx.arc(755,44,21,0,Math.PI*2); ctx.fill();
+          ctx.shadowBlur=0; ctx.restore();
+          ctx.fillStyle=th.skyA;
+          ctx.beginPath(); ctx.arc(767,39,16,0,Math.PI*2); ctx.fill();
+        }
+        // Sunset: sun on horizon
+        if(th.mode==='sunset'){
+          ctx.save();
+          const sr2=ctx.createRadialGradient(W-100,GY,8,W-100,GY,110);
+          sr2.addColorStop(0,'rgba(255,220,60,1)'); sr2.addColorStop(0.3,'rgba(255,110,20,0.7)'); sr2.addColorStop(1,'rgba(255,60,0,0)');
+          ctx.fillStyle=sr2; ctx.fillRect(W-210,GY-110,220,120);
+          ctx.shadowColor='rgba(255,200,0,0.9)'; ctx.shadowBlur=28;
+          ctx.fillStyle='rgba(255,210,40,0.95)';
+          ctx.beginPath(); ctx.arc(W-100,GY,26,Math.PI,0); ctx.fill();
+          ctx.shadowBlur=0; ctx.restore();
+        }
+        // Distant hills — two depth layers
+        ctx.save();
+        ctx.fillStyle=th.hillA;
+        th.hills.forEach(([hx,hrx])=>{ ctx.beginPath(); ctx.ellipse(hx,GY,hrx,52,0,Math.PI,0); ctx.fill(); });
+        ctx.fillStyle=th.hillB;
+        th.hills.forEach(([hx,hrx],i)=>{ const ox=[25,-20,15][i]; ctx.beginPath(); ctx.ellipse(hx+ox,GY,hrx*0.68,38,0,Math.PI,0); ctx.fill(); });
+        ctx.restore();
+        // Clouds with shadow beneath
+        const ca=th.mode==='night'?0.15:0.93;
+        th.clouds.forEach(([cx,cy,r])=>{
+          ctx.fillStyle=`rgba(0,0,0,${th.mode==='night'?0.03:0.07})`;
+          [[0,9,r],[r*.72,15,r*.6],[-r*.58,17,r*.5]].forEach(([ox,oy,sr])=>{ ctx.beginPath(); ctx.arc(cx+ox,cy+oy,sr,0,Math.PI*2); ctx.fill(); });
+          ctx.fillStyle=`rgba(255,255,255,${ca})`;
+          [[0,0,r],[r*.72,6,r*.6],[-r*.58,8,r*.5]].forEach(([ox,oy,sr])=>{ ctx.beginPath(); ctx.arc(cx+ox,cy+oy,sr,0,Math.PI*2); ctx.fill(); });
+        });
+        // Ground
+        const gg=ctx.createLinearGradient(0,GY,0,H);
+        gg.addColorStop(0,th.groundA); gg.addColorStop(0.22,th.groundB); gg.addColorStop(0.55,th.dirtA); gg.addColorStop(1,th.dirtB);
+        ctx.fillStyle=gg; ctx.fillRect(0,GY,W,H-GY);
+        ctx.fillStyle=th.groundA; ctx.fillRect(0,GY,W,14);
+        if(th.mode!=='night'){
+          ctx.fillStyle=th.groundB;
+          for(let gx=0;gx<W;gx+=18){
+            ctx.beginPath(); ctx.moveTo(gx,GY+14); ctx.quadraticCurveTo(gx+4,GY+6,gx+9,GY+14); ctx.quadraticCurveTo(gx+13,GY+6,gx+17,GY+14); ctx.fill();
+          }
+        }
+        ctx.fillStyle='rgba(255,255,255,0.1)'; ctx.fillRect(0,GY,W,3);
+      }
+
+      function drawSling(){
+        const lx=SX-22, ly=SY-10, rx=SX+22, ry=SY-10;
+        ctx.lineCap='round';
+        // Cast shadow
+        ctx.strokeStyle='rgba(0,0,0,0.2)'; ctx.lineWidth=15;
+        ctx.beginPath(); ctx.moveTo(SX+5,GY); ctx.lineTo(SX+5,SY+14); ctx.stroke();
+        // Dark outer bark
+        ctx.strokeStyle='#1e0900'; ctx.lineWidth=14;
+        ctx.beginPath(); ctx.moveTo(SX,GY); ctx.lineTo(SX,SY+12); ctx.stroke();
+        ctx.lineWidth=11;
+        ctx.beginPath(); ctx.moveTo(SX,SY+12); ctx.lineTo(lx,ly); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(SX,SY+12); ctx.lineTo(rx,ry); ctx.stroke();
+        // Inner wood
+        ctx.strokeStyle='#7a4010'; ctx.lineWidth=10;
+        ctx.beginPath(); ctx.moveTo(SX,GY); ctx.lineTo(SX,SY+12); ctx.stroke();
+        ctx.lineWidth=7;
+        ctx.beginPath(); ctx.moveTo(SX,SY+12); ctx.lineTo(lx,ly); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(SX,SY+12); ctx.lineTo(rx,ry); ctx.stroke();
+        // Wood grain streaks
+        ctx.strokeStyle='rgba(180,90,20,0.35)'; ctx.lineWidth=2;
+        ctx.beginPath(); ctx.moveTo(SX-1,GY); ctx.lineTo(SX-2,SY+18); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(SX+2,GY); ctx.lineTo(SX+3,SY+18); ctx.stroke();
+        // Fork tips (knobs)
+        ctx.fillStyle='#1e0900';
+        ctx.beginPath(); ctx.arc(lx,ly,8,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(rx,ry,8,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle='#8a5020';
+        ctx.beginPath(); ctx.arc(lx,ly,5,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(rx,ry,5,0,Math.PI*2); ctx.fill();
+        // Elastic — triple layer for thickness
+        const bx=(bird&&!bird.launched)?drag.x:SX;
+        const by=(bird&&!bird.launched)?drag.y:SY;
+        ctx.strokeStyle='rgba(0,0,0,0.28)'; ctx.lineWidth=6;
+        ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(bx+2,by+2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(rx,ry); ctx.lineTo(bx+2,by+2); ctx.stroke();
+        ctx.strokeStyle='#9b5010'; ctx.lineWidth=5;
+        ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(bx,by); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(rx,ry); ctx.lineTo(bx,by); ctx.stroke();
+        ctx.strokeStyle='#d48030'; ctx.lineWidth=2.5;
+        ctx.beginPath(); ctx.moveTo(lx,ly); ctx.lineTo(bx,by); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(rx,ry); ctx.lineTo(bx,by); ctx.stroke();
+      }
+
+      // ── 3D bevel blocks ─────────────────────────────────────
+      const BSTYLE={
+        wood: {b:[155,92,16],lt:'rgba(210,155,65,0.85)',dk:'rgba(70,30,0,0.88)',e:'#3d1800'},
+        stone:{b:[140,140,150],lt:'rgba(200,200,215,0.85)',dk:'rgba(70,70,80,0.88)',e:'#3a3a4a'},
+        brick:{b:[175,58,22],lt:'rgba(225,108,72,0.85)',dk:'rgba(90,18,0,0.9)',e:'#5a1200'}
+      };
+      function drawBlocks(){
+        blocks.forEach(b=>{
+          if(b.hp<=0) return;
+          const s=BSTYLE[b.type]||BSTYLE.wood;
+          const t=b.hp/b.maxHp;
+          const fade=0.45+0.55*t;
+          const [br,bg2,bb2]=s.b;
+          const fc=`rgb(${~~(br*fade)},${~~(bg2*fade)},${~~(bb2*fade)})`;
+          const bv=Math.min(6,b.w/5,b.h/5);
+          const {x,y,w,h}=b;
+          // Drop shadow
+          ctx.save();
+          ctx.shadowColor='rgba(0,0,0,0.45)'; ctx.shadowBlur=8; ctx.shadowOffsetX=3; ctx.shadowOffsetY=5;
+          ctx.fillStyle=fc; ctx.fillRect(x,y,w,h);
+          ctx.restore();
+          // Main face
+          ctx.fillStyle=fc; ctx.fillRect(x,y,w,h);
+          // Top bevel (light)
+          ctx.fillStyle=s.lt;
+          ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+w,y); ctx.lineTo(x+w-bv,y+bv); ctx.lineTo(x+bv,y+bv); ctx.closePath(); ctx.fill();
+          // Left bevel
+          ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x+bv,y+bv); ctx.lineTo(x+bv,y+h-bv); ctx.lineTo(x,y+h); ctx.closePath(); ctx.fill();
+          // Bottom bevel (dark)
+          ctx.fillStyle=s.dk;
+          ctx.beginPath(); ctx.moveTo(x,y+h); ctx.lineTo(x+bv,y+h-bv); ctx.lineTo(x+w-bv,y+h-bv); ctx.lineTo(x+w,y+h); ctx.closePath(); ctx.fill();
+          // Right bevel
+          ctx.beginPath(); ctx.moveTo(x+w,y); ctx.lineTo(x+w,y+h); ctx.lineTo(x+w-bv,y+h-bv); ctx.lineTo(x+w-bv,y+bv); ctx.closePath(); ctx.fill();
+          // Texture: brick mortar
+          if(b.type==='brick'&&w>24){
+            ctx.save(); ctx.beginPath(); ctx.rect(x,y,w,h); ctx.clip();
+            ctx.strokeStyle='rgba(0,0,0,0.3)'; ctx.lineWidth=1;
+            const rh2=20, cw2=44;
+            for(let row=0;row*rh2<h+rh2;row++){
+              const ry2=y+row*rh2;
+              ctx.beginPath(); ctx.moveTo(x,ry2); ctx.lineTo(x+w,ry2); ctx.stroke();
+              const off=row%2===0?0:cw2/2;
+              for(let col=0;col*cw2<w+cw2;col++){
+                const cx3=x+col*cw2-off;
+                if(cx3>x&&cx3<x+w){ ctx.beginPath(); ctx.moveTo(cx3,ry2); ctx.lineTo(cx3,ry2+rh2); ctx.stroke(); }
+              }
+            }
+            ctx.restore();
+          }
+          // Texture: wood grain
+          if(b.type==='wood'&&w>18){
+            ctx.save(); ctx.beginPath(); ctx.rect(x+bv,y+bv,w-bv*2,h-bv*2); ctx.clip();
+            ctx.strokeStyle='rgba(80,30,0,0.2)'; ctx.lineWidth=1;
+            for(let gi=1;gi<4;gi++){ ctx.beginPath(); ctx.moveTo(x+gi*w/4,y+bv+1); ctx.lineTo(x+gi*w/4+1,y+h-bv-1); ctx.stroke(); }
+            ctx.restore();
+          }
+          // Damage cracks
+          if(b.hp<b.maxHp){
+            ctx.save(); ctx.beginPath(); ctx.rect(x,y,w,h); ctx.clip();
+            ctx.strokeStyle='rgba(0,0,0,0.6)'; ctx.lineWidth=2;
+            ctx.beginPath(); ctx.moveTo(x+w*.28,y+2); ctx.lineTo(x+w*.56,y+h*.74); ctx.stroke();
+            if(t<0.55){
+              ctx.lineWidth=1.5;
+              ctx.beginPath(); ctx.moveTo(x+w*.56,y+4); ctx.lineTo(x+w*.3,y+h*.66); ctx.stroke();
+              ctx.beginPath(); ctx.moveTo(x+w*.38,y+h*.3); ctx.lineTo(x+w*.66,y+h*.52); ctx.stroke();
+            }
+            ctx.restore();
+          }
+          ctx.strokeStyle=s.e; ctx.lineWidth=1.5; ctx.strokeRect(x,y,w,h);
+        });
+      }
+
+      // ── Cancer cell ─────────────────────────────────────────
+      function drawCancerCell(p){
+        if(p.hp<=0) return;
+        const dmg=p.hp<p.maxHp;
+        const r=p.r;
+        const NS=9;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        // Ground shadow ellipse
+        ctx.save(); ctx.scale(1,0.3);
+        ctx.fillStyle='rgba(0,0,0,0.25)';
+        ctx.beginPath(); ctx.arc(0,(r+18)/0.3,r*0.85,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+        // Glow aura
+        ctx.save();
+        ctx.shadowColor=dmg?'#8bc400':'#00cc44'; ctx.shadowBlur=20;
+        const glowG=ctx.createRadialGradient(0,0,r*0.5,0,0,r+20);
+        glowG.addColorStop(0,'rgba(0,0,0,0)');
+        glowG.addColorStop(1,dmg?'rgba(100,160,0,0.42)':'rgba(0,180,60,0.42)');
+        ctx.fillStyle=glowG;
+        ctx.beginPath(); ctx.arc(0,0,r+20,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+        // Spiky body
+        ctx.beginPath();
+        for(let i=0;i<NS;i++){
+          const a1=(i/NS)*Math.PI*2-Math.PI/2;
+          const a2=((i+0.5)/NS)*Math.PI*2-Math.PI/2;
+          const a3=((i+1)/NS)*Math.PI*2-Math.PI/2;
+          const outerR=r+8+Math.sin(i*1.9+currentLevel*0.7)*4;
+          const innerR=r-7;
+          if(i===0) ctx.moveTo(Math.cos(a1)*innerR,Math.sin(a1)*innerR);
+          ctx.lineTo(Math.cos(a1)*innerR,Math.sin(a1)*innerR);
+          ctx.lineTo(Math.cos(a2)*outerR,Math.sin(a2)*outerR);
+          ctx.lineTo(Math.cos(a3)*innerR,Math.sin(a3)*innerR);
+        }
+        ctx.closePath();
+        ctx.save();
+        ctx.shadowColor='rgba(0,0,0,0.6)'; ctx.shadowBlur=10; ctx.shadowOffsetY=5;
+        const bg2=ctx.createRadialGradient(-r*0.25,-r*0.32,r*0.05,0,0,r+9);
+        bg2.addColorStop(0,dmg?'#c8e840':'#72f04a');
+        bg2.addColorStop(0.42,dmg?'#7aaa00':'#28a020');
+        bg2.addColorStop(1,dmg?'#3a5800':'#0a4a10');
+        ctx.fillStyle=bg2; ctx.fill();
+        ctx.shadowBlur=0;
+        ctx.strokeStyle='#0a0a0a'; ctx.lineWidth=3; ctx.stroke();
+        ctx.restore();
+        // Inner nucleus blob
+        ctx.fillStyle=dmg?'rgba(100,140,0,0.28)':'rgba(0,120,40,0.28)';
+        ctx.beginPath(); ctx.ellipse(r*0.07,r*0.12,r*0.44,r*0.32,0.5,0,Math.PI*2); ctx.fill();
+        // ─ Face ─
+        const ey=-r*0.09, eox=r*0.3, ew=r*0.23, eh=r*0.27;
+        // Eye whites
+        ctx.save(); ctx.shadowColor='rgba(0,0,0,0.4)'; ctx.shadowBlur=5;
+        ctx.fillStyle='#fffdf5';
+        ctx.beginPath(); ctx.ellipse(-eox,ey,ew,eh,-0.22,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(eox,ey,ew,eh,0.22,0,Math.PI*2); ctx.fill();
+        ctx.restore();
+        // Angry brows
+        ctx.save(); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.lineCap='round';
+        ctx.beginPath(); ctx.moveTo(-eox-ew*0.9,ey-eh-r*0.05); ctx.lineTo(-eox+ew*0.6,ey-eh+r*0.1); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(eox+ew*0.9,ey-eh-r*0.05); ctx.lineTo(eox-ew*0.6,ey-eh+r*0.1); ctx.stroke();
+        ctx.restore();
+        // Iris
+        ctx.fillStyle=dmg?'#aacc00':'#00bb44';
+        ctx.beginPath(); ctx.ellipse(-eox,ey,ew*0.55,eh*0.65,0,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(eox,ey,ew*0.55,eh*0.65,0,0,Math.PI*2); ctx.fill();
+        // Pupil
+        ctx.fillStyle='#060606';
+        ctx.beginPath(); ctx.arc(-eox,ey,ew*0.28,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(eox,ey,ew*0.28,0,Math.PI*2); ctx.fill();
+        // Eye shine
+        ctx.fillStyle='rgba(255,255,255,0.95)';
+        ctx.beginPath(); ctx.arc(-eox-ew*0.18,ey-eh*0.22,ew*0.14,0,Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(eox-ew*0.18,ey-eh*0.22,ew*0.14,0,Math.PI*2); ctx.fill();
+        // Eye outline
+        ctx.strokeStyle='rgba(0,0,0,0.45)'; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.ellipse(-eox,ey,ew,eh,-0.22,0,Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(eox,ey,ew,eh,0.22,0,Math.PI*2); ctx.stroke();
+        // Jagged snarl
+        const my=r*0.33;
+        ctx.save(); ctx.beginPath(); ctx.rect(-r*0.44,my-2,r*0.88,r*0.28+4); ctx.clip();
+        ctx.strokeStyle='#111'; ctx.lineWidth=2.5; ctx.lineJoin='round';
+        ctx.beginPath();
+        ctx.moveTo(-r*0.4,my); ctx.lineTo(-r*0.24,my+r*0.19); ctx.lineTo(-r*0.08,my+r*0.07);
+        ctx.lineTo(r*0.08,my+r*0.19); ctx.lineTo(r*0.26,my+r*0.07); ctx.lineTo(r*0.4,my);
+        ctx.stroke();
+        ctx.restore();
+        // Fangs
+        ctx.fillStyle='#fffdf5'; ctx.strokeStyle='rgba(0,0,0,0.45)'; ctx.lineWidth=1;
+        [[-r*0.3,my],[r*0.04,my]].forEach(([tx,ty])=>{
+          ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(tx+r*0.14,ty); ctx.lineTo(tx+r*0.07,ty+r*0.18); ctx.closePath(); ctx.fill(); ctx.stroke();
+        });
+        // HP pips
+        if(p.maxHp>1){
+          const spacing=15, total=(p.maxHp-1)*spacing;
+          for(let i=0;i<p.maxHp;i++){
+            const dpx=i*spacing-total/2, dpy=-r-20;
+            ctx.save();
+            ctx.shadowColor='rgba(0,0,0,0.5)'; ctx.shadowBlur=4;
+            ctx.fillStyle=i<p.hp?'#FFD600':'rgba(40,40,40,0.88)';
+            ctx.beginPath(); ctx.arc(dpx,dpy,7,0,Math.PI*2); ctx.fill();
+            ctx.shadowBlur=0;
+            if(i<p.hp){ ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.beginPath(); ctx.arc(dpx-1.5,dpy-2,3,0,Math.PI*2); ctx.fill(); }
+            ctx.strokeStyle='#111'; ctx.lineWidth=1.5;
+            ctx.beginPath(); ctx.arc(dpx,dpy,7,0,Math.PI*2); ctx.stroke();
+            ctx.restore();
+          }
+        }
+        ctx.restore();
+      }
+
+      // ── Boob projectile ─────────────────────────────────────
+      function drawBoob(x,y,r,glowing){
+        ctx.save();
+        if(glowing){
+          ctx.shadowColor='rgba(255,140,200,0.9)'; ctx.shadowBlur=22;
+        } else {
+          ctx.shadowColor='rgba(0,0,0,0.45)'; ctx.shadowBlur=10; ctx.shadowOffsetY=4;
+        }
+        let drewImage=false;
+        if(boobImg.complete&&boobImg.naturalWidth>0){
+          // Clip lives in its own save so try-finally guarantees restore even if drawImage throws
+          ctx.save();
+          try {
+            ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.clip();
+            ctx.drawImage(boobImg,x-r,y-r,r*2,r*2);
+            drewImage=true;
+          } catch(e) {
+            // drawImage failed (CORS/security on local files)
+          } finally {
+            ctx.restore(); // always remove the clip
+          }
+        }
+        if(!drewImage){
+          // fallback: pink circle
+          ctx.fillStyle='#ff69b4';
+          ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+        }
+        ctx.restore();
+        ctx.strokeStyle='rgba(0,0,0,0.28)'; ctx.lineWidth=2.5;
+        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.stroke();
+      }
+
+      function drawTrajectory(){
+        if(state!=='aiming'||!drag.on) return;
+        let vx=(SX-drag.x)*POWER, vy=(SY-drag.y)*POWER, px=SX, py=SY;
+        for(let i=0;i<36;i++){
+          vy+=GRAV; px+=vx; py+=vy;
+          if(i%2===0){
+            ctx.fillStyle=`rgba(255,255,255,${Math.max(0,0.76-i*0.022)})`;
+            ctx.beginPath(); ctx.arc(px,py,Math.max(1,3.8-i*0.06),0,Math.PI*2); ctx.fill();
+          }
+          if(py>GY) break;
+        }
+      }
+
+      function drawParticles(){
+        particles.forEach(p=>{
+          ctx.save();
+          ctx.globalAlpha=Math.max(0,p.life);
+          ctx.shadowColor=p.col; ctx.shadowBlur=10;
+          ctx.fillStyle=p.col;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life,0,Math.PI*2); ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      // ── HUD ─────────────────────────────────────────────────
+      function rr(x,y,w,h,r2){ if(ctx.roundRect) ctx.roundRect(x,y,w,h,r2); else ctx.rect(x,y,w,h); }
+
+      function drawHUD(){
+        const barY=GY+6, barH=H-GY-12;
+        // Full-width dark bar
+        ctx.save();
+        ctx.fillStyle='rgba(8,8,16,0.72)';
+        ctx.beginPath(); rr(8,barY,W-16,barH,16); ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.lineWidth=1.5;
+        ctx.beginPath(); rr(8,barY,W-16,barH,16); ctx.stroke();
+        // Inner top highlight
+        ctx.fillStyle='rgba(255,255,255,0.07)';
+        ctx.beginPath(); rr(9,barY+1,W-18,8,14); ctx.fill();
+        ctx.restore();
+
+        // LEFT — shots label + queue
+        ctx.fillStyle='rgba(255,255,255,0.42)';
+        ctx.font='bold 9px Arial'; ctx.textAlign='left';
+        ctx.fillText('SHOTS', 22, barY+13);
+        const bcy=barY+barH/2+5;
+        const total=LEVELS[currentLevel].birds;
+        for(let i=0;i<total;i++){
+          const bx=22+i*32+15;
+          if(i<birdsLeft){ drawBoob(bx,bcy,12,false); }
+          else {
+            ctx.fillStyle='rgba(255,255,255,0.1)';
+            ctx.beginPath(); ctx.arc(bx,bcy,12,0,Math.PI*2); ctx.fill();
+            ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1.5;
+            ctx.beginPath(); ctx.arc(bx,bcy,12,0,Math.PI*2); ctx.stroke();
+          }
+        }
+
+        // CENTER — score badge
+        ctx.save();
+        ctx.shadowColor='rgba(255,200,0,0.6)'; ctx.shadowBlur=16;
+        ctx.fillStyle='rgba(255,200,0,0.96)';
+        ctx.beginPath(); rr(W/2-70,barY+1,140,barH-2,13); ctx.fill();
+        ctx.shadowBlur=0;
+        ctx.fillStyle='rgba(255,255,255,0.28)';
+        ctx.beginPath(); rr(W/2-68,barY+3,136,barH/2-2,11); ctx.fill();
+        ctx.fillStyle='rgba(0,0,0,0.72)';
+        ctx.font='bold 10px Arial Black,Arial'; ctx.textAlign='center';
+        ctx.fillText('SCORE', W/2, barY+16);
+        ctx.font='bold 24px Arial Black,Arial';
+        ctx.fillText(score, W/2, barY+42);
+        ctx.restore();
+
+        // RIGHT — level indicator
+        ctx.save();
+        ctx.fillStyle='rgba(255,255,255,0.38)';
+        ctx.font='bold 9px Arial'; ctx.textAlign='right';
+        ctx.fillText('LEVEL', W-22, barY+13);
+        const dotCy=bcy;
+        for(let i=0;i<3;i++){
+          const dx2=W-22-32*(2-i)-10;
+          ctx.save();
+          if(i===currentLevel){ ctx.shadowColor='#FFD600'; ctx.shadowBlur=14; ctx.fillStyle='#FFD600'; }
+          else if(i<currentLevel){ ctx.fillStyle='rgba(255,255,255,0.55)'; }
+          else { ctx.fillStyle='rgba(255,255,255,0.14)'; }
+          ctx.beginPath(); ctx.arc(dx2,dotCy,11,0,Math.PI*2); ctx.fill();
+          ctx.shadowBlur=0;
+          if(i===currentLevel){
+            ctx.fillStyle='rgba(255,255,255,0.2)';
+            ctx.beginPath(); ctx.arc(dx2-2,dotCy-3,5,0,Math.PI*2); ctx.fill();
+          }
+          ctx.strokeStyle=i===currentLevel?'rgba(180,140,0,0.7)':'rgba(255,255,255,0.18)'; ctx.lineWidth=1.5;
+          ctx.beginPath(); ctx.arc(dx2,dotCy,11,0,Math.PI*2); ctx.stroke();
+          ctx.fillStyle=i===currentLevel?'#111':'rgba(255,255,255,0.75)';
+          ctx.font=`bold ${i===currentLevel?11:10}px Arial`; ctx.textAlign='center';
+          ctx.fillText(i+1,dx2,dotCy+4);
+          ctx.restore();
+        }
+        ctx.restore();
+        ctx.textAlign='left';
+      }
+
+      function drawOverlay(){
+        if(state!=='levelwin'&&state!=='gameover'&&state!=='gamecomplete') return;
+        ctx.fillStyle='rgba(0,0,0,0.7)'; ctx.fillRect(0,0,W,H);
+        ctx.textAlign='center';
+        if(state==='levelwin'){
+          ctx.save(); ctx.shadowColor='#FFD600'; ctx.shadowBlur=65;
+          ctx.fillStyle='#FFD600'; ctx.font='bold 64px Arial Black,Arial';
+          ctx.fillText('LEVEL CLEAR!',W/2,H/2-14);
+          ctx.shadowBlur=0;
+          ctx.fillStyle='rgba(255,255,255,0.9)'; ctx.font='bold 18px Arial';
+          ctx.fillText('Hit Next Level to continue',W/2,H/2+30);
+          ctx.restore();
+        }
+        if(state==='gameover'){
+          ctx.save(); ctx.shadowColor='#ff1818'; ctx.shadowBlur=65;
+          ctx.fillStyle='#ff4444'; ctx.font='bold 64px Arial Black,Arial';
+          ctx.fillText('GAME OVER',W/2,H/2-14);
+          ctx.shadowBlur=0;
+          ctx.fillStyle='rgba(255,255,255,0.9)'; ctx.font='bold 18px Arial';
+          ctx.fillText('Hit Reset to try again',W/2,H/2+30);
+          ctx.restore();
+        }
+        if(state==='gamecomplete'){
+          ctx.save(); ctx.shadowColor='#FFD600'; ctx.shadowBlur=75;
+          ctx.fillStyle='#FFD600'; ctx.font='bold 72px Arial Black,Arial';
+          ctx.fillText('YOU WIN!',W/2,H/2-28);
+          ctx.shadowBlur=0;
+          ctx.fillStyle='#fff'; ctx.font='bold 28px Arial';
+          ctx.fillText(`Final Score: ${score}`,W/2,H/2+26);
+          ctx.fillStyle='rgba(255,255,255,0.62)'; ctx.font='17px Arial';
+          ctx.fillText('Cancer defeated. $boobzcoin wins!',W/2,H/2+60);
+          ctx.restore();
+        }
+        ctx.textAlign='left'; ctx.shadowBlur=0;
+      }
+
+      // ── Physics update ──────────────────────
+      function update(){
+        // Sanity: state='aiming' but no bird — shouldn't happen, but auto-fix it
+        if(state==='aiming' && !bird) { spawnBird(); return; }
+
+        particles=particles.filter(p=>p.life>0);
+        particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=0.022;});
+
+        // Waiting to spawn next bird — count frames, no setTimeout needed
+        if(state==='waiting'){
+          if(++waitFrames>=55){ waitFrames=0; spawnBird(); }
+          return;
+        }
+
+        if(state!=='flying'||!bird) return;
+
+        bird.frames=(bird.frames||0)+1;
+        bird.vy+=GRAV; bird.x+=bird.vx; bird.y+=bird.vy;
+
+        if(bird.y+bird.r>=GY){
+          bird.y=GY-bird.r; bird.vy*=-0.3; bird.vx*=0.72;
+          if(Math.abs(bird.vy)<1.5) bird.vy=0;
+        }
+
+        blocks.forEach(b=>{
+          if(b.hp<=0||!circleAABB(bird.x,bird.y,bird.r,b.x,b.y,b.w,b.h)) return;
+          const spd=Math.sqrt(bird.vx**2+bird.vy**2);
+          if(spd>2.5){b.hp-=Math.ceil(spd/3.5);if(b.hp<=0){burst(b.x+b.w/2,b.y+b.h/2,'#c8860a');score+=120;}}
+          const cx=b.x+b.w/2,cy=b.y+b.h/2;
+          if(Math.abs(bird.x-cx)/(b.w*0.5)>Math.abs(bird.y-cy)/(b.h*0.5)) bird.vx*=-0.45; else bird.vy*=-0.45;
+          bird.vx*=0.72; bird.vy*=0.72;
+        });
+
+        pigs.forEach(p=>{
+          if(p.hp<=0) return;
+          const dx=bird.x-p.x,dy=bird.y-p.y,dist=Math.sqrt(dx**2+dy**2);
+          if(dist<bird.r+p.r){
+            const spd=Math.sqrt(bird.vx**2+bird.vy**2);
+            if(spd>1.5){
+              p.hp-=Math.ceil(spd/3);
+              if(p.hp<=0){burst(p.x,p.y,'#88ee22',24);burst(p.x,p.y,'#FFD600',16);score+=500;}
+              else burst(p.x,p.y,'#66cc33',10);
+            }
+            const a=Math.atan2(dy,dx);
+            bird.vx=Math.cos(a)*spd*0.45; bird.vy=Math.sin(a)*spd*0.45;
+          }
+        });
+
+        const spd=Math.sqrt(bird.vx**2+bird.vy**2);
+        const done=bird.x>W+60||bird.x<-60||bird.y>H+60
+                  ||(bird.y>=GY-bird.r-2&&spd<0.8)
+                  ||(bird.frames>480&&spd<3);
+        if(done){
+          bird=null; birdsLeft--;
+          const alivePigs=pigs.filter(p=>p.hp>0).length;
+          if(alivePigs===0){
+            score+=birdsLeft*250;
+            state=currentLevel<2?'levelwin':'gamecomplete';
+            if(state==='levelwin') document.getElementById('gameNextBtn').style.display='inline-block';
+          } else if(birdsLeft<=0){
+            state='gameover';
+          } else {
+            state='waiting'; waitFrames=0; // frame-based delay, no setTimeout
+          }
+        }
+      }
+
+      // ── Main loop ───────────────────────────
+      function loop(){
+        requestAnimationFrame(loop); // reschedule FIRST — loop never dies
+
+        // update() in its OWN try-catch so a draw error can never freeze the state machine
+        try { update(); } catch(e){ console.error('[update]',e); }
+
+        // Draw in a separate try-catch
+        try {
+          // Full context reset every frame — wipes any leaked clips/transforms
+          if(typeof ctx.reset==='function'){ ctx.reset(); ctx.scale(dpr,dpr); }
+          else { ctx.setTransform(dpr,0,0,dpr,0,0); }
+          ctx.clearRect(0,0,W,H);
+          drawBg();
+          drawSling();
+          drawBlocks();
+          pigs.forEach(drawCancerCell);
+          drawParticles();
+          drawTrajectory();
+          if(bird) drawBoob(bird.x,bird.y,bird.r,state==='aiming');
+          drawHUD();
+          drawOverlay();
+        } catch(err) {
+          console.error('[draw]', err);
+        }
+      }
+
+      // ── Input (mouse + touch on window — reliable off-canvas release detection) ──
+      let inputDown=false;
+
+      function cpXY(clientX,clientY){
+        const r=canvas.getBoundingClientRect();
+        return{x:(clientX-r.left)*W/r.width, y:(clientY-r.top)*H/r.height};
+      }
+      function onDown(clientX,clientY){
+        if(state!=='aiming'||!bird) return;
+        inputDown=true; drag.on=true;
+      }
+      function onMove(clientX,clientY){
+        if(!inputDown||!drag.on||state!=='aiming'||!bird) return;
+        const p=cpXY(clientX,clientY);
+        const dx=p.x-SX, dy=p.y-SY, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<1) return;
+        const c=Math.min(d,PULL)/d;
+        drag.x=SX+dx*c; drag.y=SY+dy*c;
+        bird.x=drag.x; bird.y=drag.y;
+      }
+      function onUp(){
+        if(!inputDown) return;
+        inputDown=false; drag.on=false;
+        if(state!=='aiming'||!bird) return;
+        const dx=SX-drag.x, dy=SY-drag.y;
+        if(Math.sqrt(dx*dx+dy*dy)<12){ drag.x=SX; drag.y=SY; return; }
+        bird.vx=dx*POWER; bird.vy=dy*POWER; bird.launched=true;
+        drag.x=SX; drag.y=SY; state='flying';
+      }
+
+      // Mouse — down on canvas, move/up on window
+      canvas.addEventListener('mousedown', e=>{ e.preventDefault(); onDown(e.clientX,e.clientY); },{passive:false});
+      window.addEventListener('mousemove', e=>{ onMove(e.clientX,e.clientY); });
+      window.addEventListener('mouseup',   ()=>{ onUp(); });
+
+      // Touch — start on canvas, move/end on window
+      canvas.addEventListener('touchstart', e=>{
+        e.preventDefault();
+        if(e.touches.length) onDown(e.touches[0].clientX,e.touches[0].clientY);
+      },{passive:false});
+      window.addEventListener('touchmove', e=>{
+        if(inputDown&&e.touches.length){ e.preventDefault(); onMove(e.touches[0].clientX,e.touches[0].clientY); }
+      },{passive:false});
+      window.addEventListener('touchend', ()=>{ onUp(); });
+
+      // ── Buttons ─────────────────────────────
+      document.getElementById('gameResetBtn').addEventListener('click', ()=>initLevel(currentLevel,false));
+      document.getElementById('gameNextBtn').addEventListener('click', ()=>{
+        if(state==='levelwin'&&currentLevel<2) initLevel(currentLevel+1,true);
+      });
+      document.querySelectorAll('.game-level-tab').forEach((btn,i)=>{
+        btn.addEventListener('click',()=>initLevel(i,false));
+      });
+
+      initLevel(0, false);
+      loop();
+    })();
+
+    function showBuyPanel(id, btn) {
+      document.querySelectorAll('.buy-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.buy-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('buyPanel-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function copyCA() {
+      const ca = 'abcd';
+      const onSuccess = () => {
+        const headerBtn = document.getElementById('copyBtn');
+        if (headerBtn) {
+          headerBtn.textContent = 'Copied!';
+          headerBtn.classList.add('copied');
+          setTimeout(() => { headerBtn.textContent = 'Copy CA'; headerBtn.classList.remove('copied'); }, 2000);
+        }
+        document.querySelectorAll('.buy-copy-ca-btn').forEach(btn => {
+          btn.textContent = 'COPIED!';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'COPY CA'; btn.classList.remove('copied'); }, 2000);
+        });
+      };
+      const fallback = () => {
+        const ta = document.createElement('textarea');
+        ta.value = ca;
+        ta.setAttribute('readonly', '');
+        ta.contentEditable = 'true';
+        ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        if (/iP(hone|od|ad)/.test(navigator.userAgent)) {
+          const range = document.createRange();
+          range.selectNodeContents(ta);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          ta.setSelectionRange(0, 999999);
+        }
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        if (ok) onSuccess();
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(ca).then(onSuccess, fallback);
+      } else {
+        fallback();
+      }
+    }
+
+  </script> </body> </html>
